@@ -27,6 +27,19 @@ jobs:
           extensions: mbstring, dom, pdo_sqlite, sqlite3
           coverage: none
 
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Instalar dependencias JavaScript
+        run: npm ci
+
+      - name: Compilar frontend con Vite
+        run: npm run build
+
+
       - name: Instalar dependencias
         run: composer install --prefer-dist --no-interaction --no-progress
 
