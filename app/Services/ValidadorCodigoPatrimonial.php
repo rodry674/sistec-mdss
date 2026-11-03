@@ -6,6 +6,6 @@ class ValidadorCodigoPatrimonial
 {
     public function esValido(string $codigo): bool
     {
-        return $codigo !== '';
+        return trim($codigo) !== '';
     }
 }
