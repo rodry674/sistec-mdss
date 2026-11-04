@@ -1,58 +1,69 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SISTEC-MDSS 💻🏛️
+> **Sistema de Gestión y Trazabilidad de Soporte Técnico e Inventario Informático**  
+> *Desarrollado para la Municipalidad Distrital de San Sebastián - Cusco*
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+---
 
-## About Laravel
+## 🏢 Empresa Aliada y Contexto Operacional
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### **Municipalidad Distrital de San Sebastián (Cusco)**
+La Municipalidad Distrital de San Sebastián es una entidad de gobierno local encargada del desarrollo integral y la prestación de servicios públicos a más de 120,000 habitantes en la provincia de Cusco.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### **Área de Impacto: Oficina de Tecnología y Sistemas Informáticos (OTSI)**
+La **OTSI** es el área estratégica responsable de garantizar la operatividad de la infraestructura tecnológica, redes, servidores y equipos informáticos (computadoras, impresoras, switches, laptops) de todas las gerencias y direcciones del municipio.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### ⚠️ Problema Operacional
+Antes de la implementación de **SISTEC-MDSS**, la OTSI operaba bajo un flujo tradicional basado en **fichas de atención físicas en papel**:
+1. **Pérdida de Trazabilidad Patrimonial:** Dificultad para rastrear la ubicación, estado y responsable de los equipos ingresados a mantenimiento.
+2. **Falta de Historial de Incidencias:** Ausencia de un registro histórico centralizado que permitiese identificar fallas recurrentes por Código Patrimonial.
+3. **Ineficiencia en Tiempos de Respuesta:** Demora en la asignación de técnicos, diagnóstico y entrega de equipos a las áreas usuarias.
 
-## Learning Laravel
+#### 💡 Solución Tecnológica
+**SISTEC-MDSS** es una plataforma web desarrollada en **Laravel** que digitaliza y automatiza el flujo integral de soporte técnico de la OTSI, permitiendo la recepción mediante códigos patrimoniales, el registro de checklists diagnósticos, la asignación de mantenimientos y la generación de métricas en tiempo real.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Stack Tecnológico y QA
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+* **Core Framework:** Laravel (PHP 8.x)
+* **Base de Datos:** MySQL (Producción) / SQLite `:memory:` (Entorno de pruebas)
+* **Pruebas Automatizadas:** PHPUnit (Enfoque TDD)
+* **Estándar de Código:** Laravel Pint (PHP CS Fixer)
+* **Integración Continua:** GitHub Actions (Automated CI/CD Pipeline)
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 🚀 Estado de Historias de Usuario (Backlog del Sprint)
+
+
+| PBI / Issue | Descripción | Responsable | Estado |
+| :--- | :--- | :--- | :--- |
+| **PBI-01** | Registro y Recepción de Equipos Informáticos OTSI | Lead Backend Engineer 
+| **PBI-02** | Registro de Diagnóstico Técnico e Incidentes | Backend Engineer 
+| **PBI-03** | Asignación de Técnico de Soporte | Lead Frontend Engineer 
+| **PBI-04** | Panel de Control y Seguimiento de Tickets (Dashboard) | Frontend / UX 
+| **PBI-05** | Emisión de Reportes y Fichas de Salida | Fullstack Developer 
+
+
+## ⚙️ Instalación y Despliegue Local
 
 ```bash
-composer require laravel/boost --dev
+# 1. Clonar el repositorio
+git clone [https://github.com/rodry674/sistec-mdss.git](https://github.com/rodry674/sistec-mdss.git)
+cd sistec-mdss
 
-php artisan boost:install
-```
+# 2. Instalar dependencias
+composer install
+npm ci
+npm run build
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+# 3. Configuración de entorno y base de datos
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
 
-## Contributing
+# 4. Ejecución del pipeline de pruebas automatizadas (CI Local)
+php artisan test
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 5. Iniciar servidor de desarrollo
+php artisan serve
