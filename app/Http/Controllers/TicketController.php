@@ -7,6 +7,7 @@ use App\Models\Categoria;
 use App\Models\Tecnico;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
 class TicketController extends Controller
@@ -25,6 +26,12 @@ class TicketController extends Controller
 
     public function store(Request $request)
     {
+        // Normaliza los nombres (acepta tanto dni/solicitante como codigo_patrimonial/codigo) y limpia espacios
+        $request->merge([
+            'dni' => trim((string) ($request->input('dni') ?? $request->input('solicitante'))),
+            'codigo_patrimonial' => trim((string) ($request->input('codigo_patrimonial') ?? $request->input('codigo'))),
+        ]);
+
         $validated = $request->validate([
             'dni' => 'required|digits:8',
             'area_id' => 'required|exists:area_municipals,id',
@@ -42,6 +49,7 @@ class TicketController extends Controller
             'titulo.required' => 'El asunto o título del incidente es obligatorio.',
             'titulo.min' => 'El asunto debe tener al menos 5 caracteres.',
             'categoria_id.required' => 'Debe seleccionar la Categoría / Tipo de Equipo.',
+            'prioridad.required' => 'Debe seleccionar un nivel de prioridad.',
             'descripcion.required' => 'La descripción detallada de la falla es obligatoria.',
             'descripcion.min' => 'La descripción debe detallar al menos 10 caracteres.',
         ]);
@@ -51,6 +59,7 @@ class TicketController extends Controller
             'solicitante' => $validated['dni'],
             'area_id' => $validated['area_id'],
             'categoria_id' => $validated['categoria_id'],
+            'registrado_por_user_id' => Auth::id(),
             'titulo' => $validated['titulo'],
             'prioridad' => $validated['prioridad'],
             'descripcion' => $validated['descripcion'],
@@ -97,19 +106,18 @@ class TicketController extends Controller
     // INTERFAZ 3: Trazabilidad Patrimonial e Indicadores KPI (PBI-04)
     public function historial(Request $request)
     {
-        $codigo = $request->input('codigo');
-        $query = Ticket::with(['areaMunicipal', 'categoria', 'tecnico'])->latest();
+        $codigo = trim((string) $request->input('codigo'));
+        $todosLosTickets = Ticket::with(['areaMunicipal', 'categoria', 'tecnico'])->latest()->get();
 
-        if ($codigo) {
-            $query->where('codigo', 'like', "%{$codigo}%");
-        }
+        $historial = $codigo
+            ? $todosLosTickets->filter(fn ($t) => str_contains((string) $t->codigo, $codigo))
+            : $todosLosTickets;
 
-        $historial = $query->get();
         $stats = [
-            'total' => Ticket::count(),
-            'recepcionados' => Ticket::where('estado', 'Recepcionado')->count(),
-            'en_atencion' => Ticket::where('estado', 'En Atención')->count(),
-            'completados' => Ticket::where('estado', 'Completado')->count(),
+            'total' => $todosLosTickets->count(),
+            'recepcionados' => $todosLosTickets->where('estado', 'Recepcionado')->count(),
+            'en_atencion' => $todosLosTickets->where('estado', 'En Atención')->count(),
+            'completados' => $todosLosTickets->where('estado', 'Completado')->count(),
         ];
 
         return view('historial', compact('historial', 'stats', 'codigo'));

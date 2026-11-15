@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -33,5 +34,48 @@ class DatabaseSeeder extends Seeder
             ['id' => 2, 'nombres' => 'Luis', 'apellidos' => 'Condori Huamán', 'email' => 'lcondori@munisansebastian.gob.pe', 'telefono' => '984333444', 'activo' => true, 'created_at' => now(), 'updated_at' => now()],
             ['id' => 3, 'nombres' => 'Andrea', 'apellidos' => 'Tito Ccahuana', 'email' => 'atito@munisansebastian.gob.pe', 'telefono' => '984555666', 'activo' => true, 'created_at' => now(), 'updated_at' => now()],
         ]);
+
+        // 4. Cuentas de Acceso Institucional (Jefe OTSI y Especialistas)
+        $usuarios = [
+            [
+                'name' => 'Ing. Rodrigo Morales (Jefe OTSI)',
+                'email' => 'jefe.otsi@munisansebastian.gob.pe',
+                'cargo' => 'Gerente / Jefe de Oficina de Tecnologías',
+                'rol' => 'jefe',
+                'activo' => true,
+                'password' => 'otsi2026',
+            ],
+            [
+                'name' => 'Carlos Quispe Mamani',
+                'email' => 'cquispe@munisansebastian.gob.pe',
+                'cargo' => 'Especialista en Hardware y Mantenimiento',
+                'rol' => 'tecnico',
+                'activo' => true,
+                'password' => 'soporte123',
+            ],
+            [
+                'name' => 'Luis Condori Huamán',
+                'email' => 'lcondori@munisansebastian.gob.pe',
+                'cargo' => 'Especialista en Soporte y Redes',
+                'rol' => 'tecnico',
+                'activo' => true,
+                'password' => 'soporte123',
+            ],
+            [
+                'name' => 'Andrea Tito Ccahuana',
+                'email' => 'atito@munisansebastian.gob.pe',
+                'cargo' => 'Especialista en Sistemas Municipales (SIAF)',
+                'rol' => 'tecnico',
+                'activo' => true,
+                'password' => 'soporte123',
+            ],
+        ];
+
+        foreach ($usuarios as $usuario) {
+            User::firstOrCreate(
+                ['email' => $usuario['email']],
+                $usuario
+            );
+        }
     }
 }
