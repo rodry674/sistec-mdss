@@ -10,9 +10,12 @@ return new class extends Migration
     {
         Schema::create('area_municipals', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 100);
+            $table->string('nombre')->index(); // MEJORA: Índice para búsquedas rápidas por nombre.
             $table->text('descripcion')->nullable();
             $table->timestamps();
+
+            // MEJORA: Índice único compuesto para evitar nombres duplicados en la misma municipalidad.
+            $table->unique(['nombre']);
         });
     }
 

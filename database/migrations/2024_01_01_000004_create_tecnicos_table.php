@@ -10,11 +10,10 @@ return new class extends Migration
     {
         Schema::create('tecnicos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombres', 100);
-            $table->string('apellidos', 100);
-            $table->string('email', 150)->unique();
-            $table->string('telefono', 20)->nullable();
-            $table->boolean('activo')->default(true);
+            $table->string('nombre');
+            $table->string('especialidad');
+            $table->string('email')->unique(); // Constraint ya presente, mantenido.
+            $table->boolean('activo')->default(true)->index(); // MEJORA: Índice para filtrar técnicos activos.
             $table->timestamps();
         });
     }

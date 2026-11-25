@@ -10,9 +10,13 @@ return new class extends Migration
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 100);
-            $table->text('descripcion')->nullable();
+            $table->string('nombre')->index(); // MEJORA: Índice para búsquedas rápidas.
+            $table->integer('sla_horas_defecto')->default(2);
+            $table->string('prioridad_defecto')->default('ALTA');
             $table->timestamps();
+
+            // MEJORA: Índice único.
+            $table->unique(['nombre']);
         });
     }
 
