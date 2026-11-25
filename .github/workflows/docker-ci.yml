@@ -1,0 +1,21 @@
+name: Docker CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  pruebas-en-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Construir imagen Docker
+        run: docker compose --profile pruebas build
+
+      - name: Ejecutar pruebas PHPUnit en Docker
+        run: docker compose --profile pruebas run --rm pruebas
