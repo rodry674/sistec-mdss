@@ -1,0 +1,9 @@
+.git/
+.github/
+vendor/
+node_modules/
+.env
+public/hot
+storage/logs/*.log
+database/*.sqlite
+datos_locales/

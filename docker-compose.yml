@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /data/database.sqlite
+    volumes:
+      - ./datos_locales:/data
+    command: >
+      sh -c "touch /data/database.sqlite
+      && php artisan migrate --force
+      && php artisan serve --host=0.0.0.0 --port=8000 --no-reload"
+
+  pruebas:
+    build: .
+    environment:
+      DB_CONNECTION: sqlite
+      DB_DATABASE: ":memory:"
+    command: php artisan test
+    profiles: ["pruebas"]
