@@ -37,3 +37,15 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: ':memory:'
         run: php artisan test --filter=RecepcionEquiposAtddTest
+
+      - name: Verificar calidad con Laravel Pint
+        run: vendor/bin/pint --test
+
+      - name: Ejecutar todas las pruebas del proyecto
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+          SESSION_DRIVER: array
+          CACHE_STORE: array
+          QUEUE_CONNECTION: sync
+        run: php artisan test
