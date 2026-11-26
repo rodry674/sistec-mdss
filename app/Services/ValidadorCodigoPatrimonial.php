@@ -8,6 +8,6 @@ class ValidadorCodigoPatrimonial
     {
         $codigoSinEspacios = trim($codigo);
 
-        return $codigoSinEspacios !== '';
+        return preg_match('/^[0-9]{12}$/', $codigoSinEspacios) === 1;
     }
 }
