@@ -22,7 +22,7 @@ jobs:
         with:
           php-version: '8.3'
           extensions: mbstring, dom, pdo_sqlite, sqlite3
-          coverage: none
+          coverage: xdebug
 
       - name: Instalar dependencias
         run: composer install --prefer-dist --no-interaction --no-progress
@@ -49,3 +49,12 @@ jobs:
           CACHE_STORE: array
           QUEUE_CONNECTION: sync
         run: php artisan test
+
+      - name: Medir cobertura de pruebas
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+          SESSION_DRIVER: array
+          CACHE_STORE: array
+          QUEUE_CONNECTION: sync
+        run: php artisan test --coverage --min=70
