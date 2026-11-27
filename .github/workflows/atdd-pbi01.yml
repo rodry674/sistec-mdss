@@ -1,0 +1,60 @@
+name: ATDD PBI-01
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/PBI-01-atdd-recepcion-equipos
+
+permissions:
+  contents: read
+
+jobs:
+  pruebas-atdd:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, dom, pdo_sqlite, sqlite3
+          coverage: xdebug
+
+      - name: Instalar dependencias
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Configurar Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Ejecutar pruebas ATDD del PBI-01
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+        run: php artisan test --filter=RecepcionEquiposAtddTest
+
+      - name: Verificar calidad con Laravel Pint
+        run: vendor/bin/pint --test
+
+      - name: Ejecutar todas las pruebas del proyecto
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+          SESSION_DRIVER: array
+          CACHE_STORE: array
+          QUEUE_CONNECTION: sync
+        run: php artisan test
+
+      - name: Medir cobertura de pruebas
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+          SESSION_DRIVER: array
+          CACHE_STORE: array
+          QUEUE_CONNECTION: sync
+        run: php artisan test --coverage --min=70
