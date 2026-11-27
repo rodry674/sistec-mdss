@@ -13,7 +13,7 @@ class RecepcionEquiposAtddTest extends TestCase
         $codigo = '123456789012';
 
         // When: se valida el codigo patrimonial
-        $resultado = (new ValidadorCodigoPatrimonial)->esValido($codigo);
+        $resultado = (new ValidadorCodigoPatrimonial)->esCodigoSbnValido($codigo);
 
         // Then: el sistema acepta el codigo
         $this->assertTrue($resultado);
@@ -25,7 +25,7 @@ class RecepcionEquiposAtddTest extends TestCase
         $codigo = 'PAT-2026-001';
 
         // When: se valida el codigo patrimonial
-        $resultado = (new ValidadorCodigoPatrimonial)->esValido($codigo);
+        $resultado = (new ValidadorCodigoPatrimonial)->esCodigoSbnValido($codigo);
 
         // Then: el sistema rechaza el codigo
         $this->assertFalse($resultado);
@@ -37,7 +37,7 @@ class RecepcionEquiposAtddTest extends TestCase
         $codigo = '123456';
 
         // When: se valida el codigo patrimonial
-        $resultado = (new ValidadorCodigoPatrimonial)->esValido($codigo);
+        $resultado = (new ValidadorCodigoPatrimonial)->esCodigoSbnValido($codigo);
 
         // Then: el sistema rechaza el codigo
         $this->assertFalse($resultado);
@@ -49,7 +49,7 @@ class RecepcionEquiposAtddTest extends TestCase
         $codigo = '';
 
         // When: se valida el codigo patrimonial
-        $resultado = (new ValidadorCodigoPatrimonial)->esValido($codigo);
+        $resultado = (new ValidadorCodigoPatrimonial)->esCodigoSbnValido($codigo);
 
         // Then: el sistema rechaza el codigo
         $this->assertFalse($resultado);
